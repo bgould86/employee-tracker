@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgould86/employee-tracker.git"
+  },
+  "author": "brett gould",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^2.2.5",
+    "inquirer": "^8.2.0",
+    "console.table": "^0.10.0"
+  },
+  "bugs": {
+    "url": "https://github.com/bgould86/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/bgould86/employee-tracker#readme"
+}
