@@ -19,6 +19,6 @@ VALUES ("Brett", "Gould", 1, 1),
         ("Nick", "Gamblin", 2, 1),
         ("Andrew", "Lynch", 3, 1),
         ("Derb", "Snerdly", 4, 1),
-        ("Money", "Handleman", 5, 1),
+        ("Kash", "Handleman", 5, 1),
         ("Gibby", "Gruber", 6, 1);
       

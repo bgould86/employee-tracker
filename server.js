@@ -27,7 +27,31 @@ function init() {
           },
           {
             name: "view all departments",
-            value: "view-dep",
+            value: "view-dept",
+          },
+          {
+            name: "view all roles",
+            value: "view-roles",
+          },
+          {
+            name: "add a department",
+            value: "add-dept",
+          },
+          {
+            name: "add a role",
+            value: "add-role",
+          },
+          {
+            name: "add an employee",
+            value: "add-emp",
+          },
+          {
+            name: "update an employee role",
+            value: "update-emp",
+          },
+          {
+            name: "Quit",
+            value: "QUIT",
           },
         ],
       },
@@ -36,18 +60,52 @@ function init() {
     .then((answers) => {
       //if statement or swtich
       if (answers.questions === "view-emps") {
-        //call view emp function
-      } else if (answers.questions === "view-dep") {
-        //call view emp function
-        viewDeps();
+        viewEmps();
+      } else if (answers.questions === "view-dept") {
+        viewDepts();
+      } else if (answers.questions === "view-roles") {
+        viewRoles();
+      } else if (answers.questions === "add-dept") {
+        addDepts();
+      } else if (answers.questions === "add-role") {
+        addRole();
+      } else if (answers.questions === "add-emp") {
+        addEmp();
+      } else if (answers.questions === "update-emp") {
+        updateEmp();
       }
     });
 }
 
-function viewDeps() {
+function viewEmps() {
+  const sql = `SELECT * FROM employees`;
+
+  db.query(sql, (err, rows) => {
+    console.table(rows);
+  });
+}
+
+function viewDepts() {
   const sql = `SELECT * FROM departments`;
 
   db.query(sql, (err, rows) => {
+    console.table(rows);
+  });
+}
+
+function viewRoles() {
+  const sql = `SELECT * FROM roles`;
+
+  db.query(sql, (err, rows) => {
+    console.table(rows);
+  });
+}
+
+function addDepts() {
+  const sql = `INSERT INTO departments (dept_name) VALUES (?)`;
+  const params = [body.dept_name];
+
+  db.query(sql, params, (err, result) => {
     console.table(rows);
   });
 }
