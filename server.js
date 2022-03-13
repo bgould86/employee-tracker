@@ -123,8 +123,46 @@ function addDepts() {
       });
     });
 }
-//function based on what they do
-//different function for each choice
+
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        name: "title",
+        type: "input",
+        message: "What's the title for the new role?",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "What's the salary for the new role?",
+      },
+    ])
+    .then((answers) => {
+      db.query("SELECT * FROM departments", function (err, results) {
+        const departments = results.map(({ id, dept_name }) => ({
+          name: dept_name,
+          value: id,
+        }));
+        inquirer
+          .prompt({
+            type: "list",
+            name: "id",
+            message: "What department is the new role in?",
+            choices: departments,
+          })
+          .then((dept_id) => {
+            db.query("INSERT INTO roles(title, salary, dept_id) values(?,?,?)", [answers.title, answers.salary, dept_id.id]);
+
+            db.query("SELECT * FROM roles", (err, res) => {
+              console.table(res);
+              init();
+            });
+          });
+      });
+    });
+}
+
 function addEmp() {
   inquirer
     .prompt([
