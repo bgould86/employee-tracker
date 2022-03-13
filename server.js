@@ -73,6 +73,8 @@ function init() {
         addEmp();
       } else if (answers.questions === "update-emp") {
         updateEmp();
+      } else if (answers.questions === "QUIT") {
+        quit();
       }
     });
 }
@@ -255,6 +257,10 @@ function updateEmp() {
         });
       });
   });
+}
+
+function quit() {
+  console.log("Thank you for choosing Employee Tracker Corp. Goodbye.");
 }
 
 init();
