@@ -217,4 +217,44 @@ function addEmp() {
     });
 }
 
+function updateEmp() {
+  db.query("SELECT * FROM employees", (err, res) => {
+    const employees = res.map(({ id, last_name }) => ({
+      name: last_name,
+      value: id,
+    }));
+    inquirer
+      .prompt({
+        type: "list",
+        name: "id",
+        message: "What employee would you like to update?",
+        choices: employees,
+      })
+      .then((employee) => {
+        db.query("SELECT * FROM roles", function (err, res) {
+          const roles = res.map(({ id, title }) => ({
+            name: title,
+            value: id,
+          }));
+          inquirer
+            .prompt({
+              type: "list",
+              name: "id",
+              message: "What is the employee's new role?",
+              choices: roles,
+            })
+            .then((role) => {
+              db.query("UPDATE employees SET role_id = ? WHERE id = ?", [role.id, employee.id], function (err, row) {
+                if (err) throw err;
+              });
+              db.query("SELECT * FROM employees", (err, res) => {
+                console.table(res);
+                init();
+              });
+            });
+        });
+      });
+  });
+}
+
 init();
