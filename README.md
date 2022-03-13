@@ -40,4 +40,4 @@ If you have any questions, please contact:
 ## Links
 
 - Here is the repo: [https://github.com/bgould86/employee-tracker](https://github.com/bgould86/employee-tracker)
-- Here is the video walk through: [https://note-taker-bdg.herokuapp.com/](https://note-taker-bdg.herokuapp.com/)
+- Here is the video walk through: [https://www.youtube.com/watch?v=Njotj6JOQjA](https://www.youtube.com/watch?v=Njotj6JOQjA)
