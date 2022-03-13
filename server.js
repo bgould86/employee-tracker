@@ -82,6 +82,7 @@ function viewEmps() {
 
   db.query(sql, (err, rows) => {
     console.table(rows);
+    init();
   });
 }
 
@@ -90,6 +91,7 @@ function viewDepts() {
 
   db.query(sql, (err, rows) => {
     console.table(rows);
+    init();
   });
 }
 
@@ -98,18 +100,83 @@ function viewRoles() {
 
   db.query(sql, (err, rows) => {
     console.table(rows);
+    init();
   });
 }
 
 function addDepts() {
-  const sql = `INSERT INTO departments (dept_name) VALUES (?)`;
-  const params = [body.dept_name];
+  inquirer
+    .prompt({
+      name: "addDept",
+      type: "input",
+      message: "What is the name of the new department?",
+    })
 
-  db.query(sql, params, (err, result) => {
-    console.table(rows);
-  });
+    .then((answer) => {
+      db.query(`INSERT INTO departments (dept_name) VALUES (?)`, answer.addDept, function (err, row) {
+        if (err) throw err;
+      });
+
+      db.query("SELECT * FROM departments", (err, res) => {
+        console.table(res);
+        init();
+      });
+    });
 }
 //function based on what they do
 //different function for each choice
+function addEmp() {
+  inquirer
+    .prompt([
+      {
+        name: "firstName",
+        type: "input",
+        message: "What's the employee's first name?",
+      },
+      {
+        name: "lastName",
+        type: "input",
+        message: "What's the employee's last name?",
+      },
+    ])
+    .then((answers) => {
+      db.query("SELECT * FROM roles", function (err, results) {
+        const roles = results.map(({ id, title }) => ({
+          name: title,
+          value: id,
+        }));
+        inquirer
+          .prompt({
+            type: "list",
+            name: "id",
+            message: "What is the employee's role?",
+            choices: roles,
+          })
+          .then((role) => {
+            db.query("SELECT * FROM employees WHERE manager_id is null", function (err, results) {
+              const managers = results.map(({ id, last_name }) => ({
+                name: last_name,
+                value: id,
+              }));
+              inquirer
+                .prompt({
+                  type: "list",
+                  name: "id",
+                  message: "What is the manager's name?",
+                  choices: managers,
+                })
+                .then((manager) => {
+                  db.query("INSERT INTO employees(first_name, last_name, role_id, manager_id) values(?,?,?,?)", [answers.firstName, answers.lastName, role.id, manager.id]);
+
+                  db.query("SELECT * FROM employees", (err, res) => {
+                    console.table(res);
+                    init();
+                  });
+                });
+            });
+          });
+      });
+    });
+}
 
 init();
